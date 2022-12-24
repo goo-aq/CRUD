@@ -23,10 +23,10 @@ addbtn.onclick = function (event) {
 
 function clear() {
   courseName.value = "";
-  courseCategory = "";
-  coursePrice = "";
-  courseDescription = "";
-  courseCapacity = "";
+  courseCategory.value = "";
+  coursePrice.value = "";
+  courseDescription.value = "";
+  courseCapacity.value = "";
 }
 
 function display() {
@@ -53,3 +53,8 @@ function Delete(index) {
   courses.splice(index, 1);
   display();
 }
+
+deleteBtn.onclick = function () {
+  courses = [];
+  table.innerHTML = "";
+};
