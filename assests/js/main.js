@@ -5,6 +5,7 @@ var courseDescription = document.getElementById("courseDescription");
 var courseCapacity = document.getElementById("courseCapacity");
 var addbtn = document.getElementById("add");
 var courses = [];
+var table = document.getElementById("table");
 
 addbtn.onclick = function (event) {
   event.preventDefault();
@@ -16,8 +17,8 @@ addbtn.onclick = function (event) {
     Capacity: courseCapacity.value,
   };
   courses.push(course);
+  display();
   clear();
-  console.log(courses);
 };
 
 function clear() {
@@ -26,4 +27,24 @@ function clear() {
   coursePrice = "";
   courseDescription = "";
   courseCapacity = "";
+}
+
+function display() {
+  var data = "";
+  for (var i = 0; i < courses.length; i++) {
+    data += `
+        <tr>
+            <td>${i + 1}</td>
+            <td>${courses[i].name}</td>
+            <td>${courses[i].category}</td>
+            <td>${courses[i].Price}</td>
+            <td>${courses[i].Description}</td>
+            <td>${courses[i].Capacity}</td>
+            <td><button class="btn btn-info">Update</button></td>
+            <td><button class="btn btn-danger">Delete</button></td>
+
+        </tr>
+        `;
+  }
+  table.innerHTML = data;
 }
