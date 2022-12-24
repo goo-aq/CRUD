@@ -16,9 +16,25 @@ addbtn.onclick = function (event) {
     Description: courseDescription.value,
     Capacity: courseCapacity.value,
   };
-  courses.push(course);
-  display();
-  clear();
+
+  Swal.fire({
+    title: "Do you want to save the changes?",
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: "Save",
+    denyButtonText: `Don't save`,
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      courses.push(course);
+      display();
+      clear();
+      Swal.fire("Saved!", "", "success");
+    } else if (result.isDenied) {
+      clear();
+      Swal.fire("Changes are not saved", "", "info");
+    }
+  });
 };
 
 function clear() {
@@ -50,11 +66,37 @@ function display() {
 }
 
 function Delete(index) {
-  courses.splice(index, 1);
-  display();
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      courses.splice(index, 1);
+      display();
+      Swal.fire("Deleted!", "Your data has been deleted.", "success");
+    }
+  });
 }
 
 deleteBtn.onclick = function () {
-  courses = [];
-  table.innerHTML = "";
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      courses = [];
+      table.innerHTML = "";
+      Swal.fire("Deleted!", "Your data has been deleted.", "success");
+    }
+  });
 };
