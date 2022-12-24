@@ -41,10 +41,15 @@ function display() {
             <td>${courses[i].Description}</td>
             <td>${courses[i].Capacity}</td>
             <td><button class="btn btn-info">Update</button></td>
-            <td><button class="btn btn-danger">Delete</button></td>
+            <td><button class="btn btn-danger" onclick="Delete(${i})">Delete</button></td>
 
         </tr>
         `;
   }
   table.innerHTML = data;
+}
+
+function Delete(index) {
+  courses.splice(index, 1);
+  display();
 }
