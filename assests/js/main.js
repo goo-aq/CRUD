@@ -6,6 +6,7 @@ var courseCapacity = document.getElementById("courseCapacity");
 var addbtn = document.getElementById("add");
 var courses = [];
 var table = document.getElementById("table");
+var search = document.getElementById("search");
 
 addbtn.onclick = function (event) {
   event.preventDefault();
@@ -99,4 +100,25 @@ deleteBtn.onclick = function () {
       Swal.fire("Deleted!", "Your data has been deleted.", "success");
     }
   });
+};
+
+search.onkeyup = function () {
+  var data = "";
+  for (var i = 0; i < courses.length; i++) {
+    if (courses[i].name.toLowerCase().includes(search.value.toLowerCase()))
+      data += `
+        <tr>
+            <td>${i + 1}</td>
+            <td>${courses[i].name}</td>
+            <td>${courses[i].category}</td>
+            <td>${courses[i].Price}</td>
+            <td>${courses[i].Description}</td>
+            <td>${courses[i].Capacity}</td>
+            <td><button class="btn btn-info">Update</button></td>
+            <td><button class="btn btn-danger" onclick="Delete(${i})">Delete</button></td>
+
+        </tr>
+        `;
+  }
+  table.innerHTML = data;
 };
