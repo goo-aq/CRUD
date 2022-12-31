@@ -7,9 +7,21 @@ var addbtn = document.getElementById("add");
 var courses = [];
 var table = document.getElementById("table");
 var search = document.getElementById("search");
+var currentIndex;
+if (JSON.parse(localStorage.getItem("courses")) != null) {
+  courses = JSON.parse(localStorage.getItem("courses"));
+  display();
+}
 
 addbtn.onclick = function (event) {
   event.preventDefault();
+  if (addbtn.value == "Add Course") {
+    add();
+  } else if (addbtn.value == "Update Course") {
+    update();
+  }
+};
+function add() {
   var course = {
     name: courseName.value,
     category: courseCategory.value,
@@ -28,6 +40,7 @@ addbtn.onclick = function (event) {
     /* Read more about isConfirmed, isDenied below */
     if (result.isConfirmed) {
       courses.push(course);
+      localStorage.setItem("courses", JSON.stringify(courses));
       display();
       clear();
       Swal.fire("Saved!", "", "success");
@@ -36,7 +49,7 @@ addbtn.onclick = function (event) {
       Swal.fire("Changes are not saved", "", "info");
     }
   });
-};
+}
 
 function clear() {
   courseName.value = "";
@@ -57,7 +70,7 @@ function display() {
             <td>${courses[i].Price}</td>
             <td>${courses[i].Description}</td>
             <td>${courses[i].Capacity}</td>
-            <td><button class="btn btn-info">Update</button></td>
+            <td><button class="btn btn-info" onclick="get(${i})">Update</button></td>
             <td><button class="btn btn-danger" onclick="Delete(${i})">Delete</button></td>
 
         </tr>
@@ -78,6 +91,7 @@ function Delete(index) {
   }).then((result) => {
     if (result.isConfirmed) {
       courses.splice(index, 1);
+      localStorage.setItem("courses", JSON.stringify(courses));
       display();
       Swal.fire("Deleted!", "Your data has been deleted.", "success");
     }
@@ -96,6 +110,7 @@ deleteBtn.onclick = function () {
   }).then((result) => {
     if (result.isConfirmed) {
       courses = [];
+      localStorage.setItem("courses", JSON.stringify(courses));
       table.innerHTML = "";
       Swal.fire("Deleted!", "Your data has been deleted.", "success");
     }
@@ -114,7 +129,7 @@ search.onkeyup = function () {
             <td>${courses[i].Price}</td>
             <td>${courses[i].Description}</td>
             <td>${courses[i].Capacity}</td>
-            <td><button class="btn btn-info">Update</button></td>
+            <td><button class="btn btn-info" onclick="get(${i})">Update</button></td>
             <td><button class="btn btn-danger" onclick="Delete(${i})">Delete</button></td>
 
         </tr>
@@ -122,3 +137,41 @@ search.onkeyup = function () {
   }
   table.innerHTML = data;
 };
+
+function get(index) {
+  var course = courses[index];
+  courseName.value = course.name;
+  courseCategory.value = course.category;
+  coursePrice.value = course.Price;
+  courseDescription.value = course.Description;
+  courseCapacity.value = course.Capacity;
+  addbtn.value = "Update Course";
+  currentIndex = index;
+}
+function update() {
+  Swal.fire({
+    title: "Do you want to save the changes?",
+    showDenyButton: true,
+    showCancelButton: true,
+    confirmButtonText: "Save",
+    denyButtonText: `Don't save`,
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      courses[currentIndex].name = courseName.value;
+      courses[currentIndex].category = courseCategory.value;
+      courses[currentIndex].Price = coursePrice.value;
+      courses[currentIndex].Description = courseDescription.value;
+      courses[currentIndex].Capacity = courseCapacity.value;
+      localStorage.setItem("courses", JSON.stringify(courses));
+      display();
+      clear();
+      addbtn.value = "Add Course";
+      Swal.fire("Saved!", "", "success");
+    } else if (result.isDenied) {
+      clear();
+      addbtn.value = "Add Course";
+      Swal.fire("Changes are not saved", "", "info");
+    }
+  });
+}
