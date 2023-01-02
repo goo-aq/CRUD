@@ -99,7 +99,8 @@ function clear() {
   categoryFlag = 1;
   priceFlag = 1;
   descriptionFlag = 1;
-  capacityFlag = 1;  
+  capacityFlag = 1;
+  addbtn.value = "Add Course";
 }
 // clear btn
 document.getElementById("clearbtn").onclick = function () {
@@ -194,6 +195,7 @@ function get(index) {
   courseCapacity.value = course.Capacity;
   addbtn.value = "Update Course";
   currentIndex = index;
+  nameFlag = 1;
 }
 function update() {
   Swal.fire({
@@ -265,7 +267,7 @@ courseName.onkeyup = function () {
 courseCategory.onkeyup = function () {
   var pattern = /^[A-Z][a-z]{2,20}$/;
   if (pattern.test(courseCategory.value)) {
-    categoryFlag=1;
+    categoryFlag = 1;
     if (courseCategory.classList.contains("is-invalid")) {
       courseCategory.classList.replace("is-invalid", "is-valid");
       categoryAlert.classList.replace("d-block", "d-none");
@@ -273,7 +275,7 @@ courseCategory.onkeyup = function () {
       courseCategory.classList.add("is-valid");
     }
   } else {
-    categoryFlag=0;
+    categoryFlag = 0;
     addbtn.setAttribute("disabled", "disabled");
     categoryAlert.classList.replace("d-none", "d-block");
     if (courseCategory.classList.contains("is-valid")) {
@@ -289,7 +291,7 @@ courseCategory.onkeyup = function () {
 coursePrice.onkeyup = function () {
   var pattern = /^[0-9]{3,4}$/;
   if (pattern.test(coursePrice.value)) {
-    priceFlag=1;
+    priceFlag = 1;
     if (coursePrice.classList.contains("is-invalid")) {
       coursePrice.classList.replace("is-invalid", "is-valid");
       priceAlert.classList.replace("d-block", "d-none");
@@ -297,7 +299,7 @@ coursePrice.onkeyup = function () {
       coursePrice.classList.add("is-valid");
     }
   } else {
-    priceFlag=0;
+    priceFlag = 0;
     addbtn.setAttribute("disabled", "disabled");
     priceAlert.classList.replace("d-none", "d-block");
     if (coursePrice.classList.contains("is-valid")) {
@@ -313,7 +315,7 @@ coursePrice.onkeyup = function () {
 courseDescription.onkeyup = function () {
   var pattern = /^.{0,120}$/;
   if (pattern.test(courseDescription.value)) {
-    descriptionFlag=1;
+    descriptionFlag = 1;
     if (courseDescription.classList.contains("is-invalid")) {
       courseDescription.classList.replace("is-invalid", "is-valid");
       descriptionAlert.classList.replace("d-block", "d-none");
@@ -321,7 +323,7 @@ courseDescription.onkeyup = function () {
       courseDescription.classList.add("is-valid");
     }
   } else {
-    descriptionFlag=0;
+    descriptionFlag = 0;
     addbtn.setAttribute("disabled", "disabled");
     descriptionAlert.classList.replace("d-none", "d-block");
     if (courseDescription.classList.contains("is-valid")) {
@@ -337,7 +339,7 @@ courseDescription.onkeyup = function () {
 courseCapacity.onkeyup = function () {
   var pattern = /^[0-9]{1,3}$/;
   if (pattern.test(courseCapacity.value)) {
-    capacityFlag=1;
+    capacityFlag = 1;
     if (courseCapacity.classList.contains("is-invalid")) {
       courseCapacity.classList.replace("is-invalid", "is-valid");
       capacityAlert.classList.replace("d-block", "d-none");
@@ -345,7 +347,7 @@ courseCapacity.onkeyup = function () {
       courseCapacity.classList.add("is-valid");
     }
   } else {
-    capacityFlag=0;
+    capacityFlag = 0;
     addbtn.setAttribute("disabled", "disabled");
     capacityAlert.classList.replace("d-none", "d-block");
     if (courseCapacity.classList.contains("is-valid")) {
